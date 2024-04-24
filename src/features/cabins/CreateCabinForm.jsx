@@ -41,8 +41,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
                 },
                 {
                     onSuccess: (data) => {
-                        console.log("data", data);
-                        reset();
+                        reset(data);
                     },
                 }
             );
@@ -50,8 +49,8 @@ function CreateCabinForm({ cabinToEdit = {} }) {
             createCabin(
                 { ...data, image: data.image[0] },
                 {
-                    onSuccess: () => {
-                        reset();
+                    onSuccess: (data) => {
+                        reset(data);
                     },
                 }
             );

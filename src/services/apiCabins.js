@@ -20,7 +20,6 @@ export async function getCabins() {
 //Create new random folder so everytime it will show different name  //
 
 export async function createEditCabin(newCabin, id) {
-    console.log(newCabin, id);
     const hasImagePath = newCabin.image?.startsWith?.(supabaseUrl);
     const imageName = `${Math.random()}-${newCabin.image.name}`.replaceAll(
         "/",
@@ -50,7 +49,6 @@ export async function createEditCabin(newCabin, id) {
     const { data, error } = await query.select().single();
 
     if (error) {
-        console.log(error);
         throw new Error("Cabins could not be created");
     }
 
