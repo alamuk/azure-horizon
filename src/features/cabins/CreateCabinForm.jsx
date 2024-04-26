@@ -10,7 +10,7 @@ import { useCreateCabin } from "./useCreateCabin.js";
 import { useEditCabin } from "./useEditCabin.js";
 
 // eslint-disable-next-line react/prop-types
-function CreateCabinForm({ cabinToEdit = {} }) {
+function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
     const { id: editId, ...editValues } = cabinToEdit;
     const isEditSession = Boolean(editId);
 
@@ -40,8 +40,9 @@ function CreateCabinForm({ cabinToEdit = {} }) {
                     editId,
                 },
                 {
-                    onSuccess: (data) => {
+                    onSuccess: () => {
                         reset(data);
+                        onCloseModal?.();
                     },
                 }
             );
@@ -49,8 +50,9 @@ function CreateCabinForm({ cabinToEdit = {} }) {
             createCabin(
                 { ...data, image: data.image[0] },
                 {
-                    onSuccess: (data) => {
+                    onSuccess: () => {
                         reset(data);
+                        onCloseModal?.();
                     },
                 }
             );
@@ -61,7 +63,10 @@ function CreateCabinForm({ cabinToEdit = {} }) {
     }
 
     return (
-        <Form onSubmit={handleSubmit(onSubmitHandler, onErrorHandler)}>
+        <Form
+            onSubmit={handleSubmit(onSubmitHandler, onErrorHandler)}
+            type={onCloseModal ? "modal" : "regular"}
+        >
             <FormRow label="Cabin name" error={errors?.name?.message}>
                 <Input
                     type="text"
@@ -147,7 +152,11 @@ function CreateCabinForm({ cabinToEdit = {} }) {
 
             <FormRow>
                 {/* reset type is an HTML attribute! */}
-                <Button variation="secondary" type="reset">
+                <Button
+                    variation="secondary"
+                    type="reset"
+                    onClick={() => onCloseModal?.()}
+                >
                     Cancel
                 </Button>
                 <Button disabled={isWorking}>
