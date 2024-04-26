@@ -1,6 +1,7 @@
 import Button from "../../ui/Button.jsx";
 import CreateCabinForm from "./CreateCabinForm.jsx";
 import Modal from "../../ui/Modal.jsx";
+import CabinTable from "./CabinTable.jsx";
 
 function AddCabin() {
     return (
@@ -10,6 +11,13 @@ function AddCabin() {
             </Modal.OpenComp>
             <Modal.WindowComp name="cabin-form">
                 <CreateCabinForm />
+            </Modal.WindowComp>
+
+            <Modal.OpenComp opens="table">
+                <Button>Show Table</Button>
+            </Modal.OpenComp>
+            <Modal.WindowComp name={"table"}>
+                <CabinTable />
             </Modal.WindowComp>
         </Modal>
     );
