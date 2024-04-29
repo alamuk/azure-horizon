@@ -13,6 +13,7 @@ import Menus from "../../ui/Menus.jsx";
 //     border-radius: 7px;
 //     overflow: hidden;
 // `;
+
 export function CabinTable() {
     const { isLoading, cabins } = useCabin();
     if (isLoading) return <Spinner />;
@@ -28,12 +29,7 @@ export function CabinTable() {
                     <div> Discount </div>
                     <div> </div>
                 </Table.Header>
-                <Table.Body
-                    data={cabins}
-                    render={(cabin) => (
-                        <CabinRow cabin={cabin} key={cabin.id} />
-                    )}
-                ></Table.Body>
+                <Table.Body data={cabins} render={(cabin) => <CabinRow cabin={cabin} key={cabin.id} />}></Table.Body>
             </Table>
         </Menus>
     );
