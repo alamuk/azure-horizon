@@ -11,6 +11,8 @@ module.exports = {
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
   settings: { react: { version: '18.2' } },
   plugins: ['react-refresh'],
+
+
   // rules: {
   //   "eslint-disable-next-line": 0,
   //   "no-unused-vars": 0,
