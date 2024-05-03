@@ -1,8 +1,8 @@
 import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
-import { guests } from "../data/data-guests.js";
 import { PAGE_SIZE } from "../utils/constants.js";
 
+/////// FUNCTION /////////
 export async function getBookings({ filter, sortBy, page }) {
     let query = supabase
         .from("bookings")
@@ -35,7 +35,9 @@ export async function getBookings({ filter, sortBy, page }) {
     return { data, count };
 }
 
+/////// FUNCTION /////////
 export async function getBooking(id) {
+    console.log(id);
     const { data, error } = await supabase
         .from("bookings")
         .select("*, cabins(*), guests(*)")
@@ -48,6 +50,8 @@ export async function getBooking(id) {
 
     return data;
 }
+
+/////// FUNCTION /////////
 
 // Returns all BOOKINGS that are were created after the given date. Useful to get bookings created in the last 30 days, for example.
 export async function getBookingsAfterDate(date) {
@@ -65,6 +69,7 @@ export async function getBookingsAfterDate(date) {
     return data;
 }
 
+/////// FUNCTION /////////
 // Returns all STAYS that are were created after the given date
 export async function getStaysAfterDate(date) {
     const { data, error } = await supabase
@@ -82,6 +87,7 @@ export async function getStaysAfterDate(date) {
     return data;
 }
 
+/////// FUNCTION /////////
 // Activity means that there is a check in or a check out today
 export async function getStaysTodayActivity() {
     const { data, error } = await supabase
@@ -103,6 +109,7 @@ export async function getStaysTodayActivity() {
     return data;
 }
 
+/////// FUNCTION /////////
 export async function updateBooking(id, obj) {
     const { data, error } = await supabase
         .from("bookings")
@@ -118,6 +125,7 @@ export async function updateBooking(id, obj) {
     return data;
 }
 
+/////// FUNCTION /////////
 export async function deleteBooking(id) {
     // REMEMBER RLS POLICIES
     const { data, error } = await supabase.from("bookings").delete().eq("id", id);
