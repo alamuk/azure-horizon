@@ -7,9 +7,10 @@ import Table from "../../ui/Table";
 import { formatCurrency } from "../../utils/helpers";
 import { formatDistanceFromNow } from "../../utils/helpers";
 import Menus from "../../ui/Menus.jsx";
-import { HiEye } from "react-icons/hi";
+import { HiArrowUp, HiEye } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
-import { HiArrowDownOnSquare } from "react-icons/hi2";
+import { HiArrowDownOnSquare, HiArrowUpOnSquare } from "react-icons/hi2";
+import useCheckout from "../check-in-out/useCheckout.js";
 
 const Cabin = styled.div`
     font-size: 1.6rem;
@@ -64,7 +65,7 @@ function BookingRow({
     },
 }) {
     const navigate = useNavigate();
-
+    const { checkout, isCheckingOut } = useCheckout();
     const statusToTagName = {
         unconfirmed: "blue",
         "checked-in": "green",
@@ -82,7 +83,9 @@ function BookingRow({
 
             <Stacked>
                 <span>
-                    {isToday(new Date(startDate)) ? "Today" : formatDistanceFromNow(startDate)}{" "}
+                    {isToday(new Date(startDate))
+                        ? "Today"
+                        : formatDistanceFromNow(startDate)}{" "}
                     &rarr; {numNights} night stay
                 </span>
                 <span>
@@ -104,6 +107,16 @@ function BookingRow({
                     >
                         See details
                     </Menus.Button>
+
+                    {status === "checked-in" && (
+                        <Menus.Button
+                            icon={<HiArrowUpOnSquare />}
+                            onClick={() => checkout(bookingId)}
+                            disabled={isCheckingOut}
+                        >
+                            Check out
+                        </Menus.Button>
+                    )}
 
                     {status === "unconfirmed" && (
                         <Menus.Button
