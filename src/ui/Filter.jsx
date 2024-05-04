@@ -39,10 +39,13 @@ const FilterButton = styled.button`
 function Filter({ filterFieldName, valueOptions }) {
     const [searchParams, setSearchParams] = useSearchParams();
     // eslint-disable-next-line react/prop-types
-    const currentFilter = searchParams.get(filterFieldName) || valueOptions.at(0).value;
+    const currentFilter =
+        // eslint-disable-next-line react/prop-types
+        searchParams.get(filterFieldName) || valueOptions.at(0).value;
 
     function handleClick(value) {
         searchParams.set(filterFieldName, value);
+        if (searchParams.get("page")) searchParams.set("page", 1);
         setSearchParams(searchParams);
     }
 
