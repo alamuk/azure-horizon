@@ -3,15 +3,23 @@ import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 import { useForm } from "react-hook-form";
+import useSignup from "./useSingup.js";
 
 // Email regex: /\S+@\S+\.\S+/
 
 function SignupForm() {
     // why use the reactForm Hook -1. error handling, for validation
-    const { register, formState, getValues, handleSubmit } = useForm();
+    const { register, formState, getValues, handleSubmit, reset } = useForm();
     const { errors } = formState;
-    function onFormSubmit(data) {
-        console.log(data);
+    const { isLoading, signup } = useSignup();
+
+    function onFormSubmit({ fullName, email, password }) {
+        signup(
+            { fullName, email, password },
+            {
+                onSettled: () => reset(),
+            }
+        );
     }
 
     return (
@@ -20,6 +28,7 @@ function SignupForm() {
                 <Input
                     type="text"
                     id="fullName"
+                    disabled={isLoading}
                     {...register("fullName", { required: "this is required" })}
                 />
             </FormRow>
@@ -28,6 +37,7 @@ function SignupForm() {
                 <Input
                     type="email"
                     id="email"
+                    disabled={isLoading}
                     {...register("email", {
                         required: "this is required",
                         pattern: {
@@ -45,6 +55,7 @@ function SignupForm() {
                 <Input
                     type="password"
                     id="password"
+                    disabled={isLoading}
                     {...register("password", {
                         required: "this is required",
                         minLength: {
@@ -62,6 +73,7 @@ function SignupForm() {
                 <Input
                     type="password"
                     id="passwordConfirm"
+                    disabled={isLoading}
                     {...register("passwordConfirm", {
                         required: "this is required",
                         validate: (value) =>
@@ -73,10 +85,10 @@ function SignupForm() {
 
             <FormRow>
                 {/* type is an HTML attribute! */}
-                <Button variation="secondary" type="reset">
+                <Button variation="secondary" type="reset" disabled={isLoading}>
                     Cancel
                 </Button>
-                <Button>Create new user</Button>
+                <Button disabled={isLoading}>Create new user</Button>
             </FormRow>
         </Form>
     );
