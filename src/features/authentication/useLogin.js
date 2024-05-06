@@ -10,7 +10,7 @@ export function useLogin() {
         mutationFn: ({ email, password }) => loginApi({ email, password }),
         onSuccess: (user) => {
             queruClinent.setQueriesData(["user"], user);
-            navigate("/dashboard");
+            navigate("/dashboard", { replace: true });
         },
 
         onError: (err) => {

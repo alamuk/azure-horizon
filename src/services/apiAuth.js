@@ -37,3 +37,9 @@ export async function getCurrentUser() {
 
 // in use Hook - use --UseMutation() -- for updating UI exiting data
 // ?? useMutation() has 2 stage = ( function) mutate , isloading
+
+//
+export async function logout() {
+    const { error } = await supabase.auth.signOut();
+    if (error) throw new Error(error.message);
+}
